@@ -4,7 +4,7 @@ import {
     BoxGeometry,
     Camera, Color, HemisphereLight,
     Mesh,
-    MeshBasicMaterial,
+    TextureLoader,
     MeshLambertMaterial,
     PerspectiveCamera,
     Scene,
@@ -32,6 +32,17 @@ const Renderer = props => {
             );
         }
     }, [state.color]);
+
+    useEffect(() => {
+        if(state.texture && cube.current) {
+            console.log('texture:','img/' + state.texture + '.jpg')
+
+            const texture = new TextureLoader().load( '/img/' + state.texture + '.jpg');
+            cube.current.material.map = texture;
+            cube.current.material.color = new Color().setHex(0xFFFFFF);
+            cube.current.material.needsUpdate = true;
+        }
+    }, [state.texture]);
 
     useEffect(() => {
         console.log('renderer', renderer);
@@ -74,7 +85,7 @@ const Renderer = props => {
                 1.2
             );
 
-            hemilight.color.setHSL(0.6, 1, 0.6);
+            //hemilight.color.setHSL(0.6, 1, 0.6);
             hemilight.groundColor.setHSL(0.095, 1, 0.75);
             hemilight.position.set(0, 50, 0);
             scene.current.add( hemilight );
