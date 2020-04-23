@@ -9,7 +9,7 @@ const initialState = {
     color: null,
     shape: null,
     gadget: null,
-    texture : null
+    texture : "https://www.publicdomainpictures.net/pictures/230000/velka/vintage-paper-texture-1504806601t0F.jpg"
 };
 
 export const updateTexture = (payload) => ({
@@ -47,7 +47,7 @@ const reducer = (state, action) => {
         case UPDATE_TEXTURE :
             return {
                 ...state,
-                color:action.payload
+                texture:action.payload
             };
         case UPDATE_GADGET :
             return {
