@@ -52,7 +52,7 @@ const reducer = (state, action) => {
         case UPDATE_GADGET :
             return {
                 ...state,
-                color:action.payload
+                gadget:action.payload
             };
         default:
             return state;
