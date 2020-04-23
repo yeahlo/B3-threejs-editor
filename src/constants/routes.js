@@ -4,6 +4,7 @@ export const ROUTE_OPTIONS = 'options';
 export const ROUTE_COLORS = 'colors';
 export const ROUTE_SHAPES = 'shapes';
 export const ROUTE_TEXTURES = 'textures';
+export const ROUTE_GADGET = 'gadget';
 
 export default {
     home: include('/', {
@@ -17,6 +18,9 @@ export default {
                 all: ''
             }),
             textures: include(ROUTE_TEXTURES, {
+                all: ''
+            }),
+            gadgets: include(ROUTE_GADGET, {
                 all: ''
             })
         })
