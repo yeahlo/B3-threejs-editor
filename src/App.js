@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useContext, useRef} from 'react';
 import './App.scss';
 import {Switch, Route, Link} from "react-router-dom";
 import routes from "./constants/routes";
@@ -8,10 +8,18 @@ import Textures from "./options/textures";
 import Shapes from "./options/shapes";
 import Renderer from "./renderer";
 import Gadget from "./options/gadgets";
+import {Store, updateColor} from "./store";
 
 const App = props => {
+
+    const {dispatch, state} = useContext(Store);
+
     return (
         <div className="App">
+
+            <button onClick={() => dispatch(updateColor(Math.random() * 0XFFFFFF))}>
+                color
+            </button>
 
             <Switch>
                 <Route exact path={routes.home.options.colors.all} component={Colors}/>
@@ -26,6 +34,7 @@ const App = props => {
                 <Link to={reverse(routes.home.options.textures.all)}>Textures</Link>
                 <Link to={reverse(routes.home.options.gadgets.all)}>Gadgets</Link>
             </nav>
+
             <Renderer/>
         </div>
     );
