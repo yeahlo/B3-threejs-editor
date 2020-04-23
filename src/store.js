@@ -6,10 +6,10 @@ const UPDATE_GADGET = 'UPDATE_GADGET';
 const UPDATE_TEXTURE = 'UPDATE_TEXTURE';
 
 const initialState = {
-    color: null,
+    color: {r : 255, g : 0, b : 0},
     shape: null,
     gadget: null,
-    texture : "https://www.publicdomainpictures.net/pictures/230000/velka/vintage-paper-texture-1504806601t0F.jpg"
+    texture : '01'
 };
 
 export const updateTexture = (payload) => ({

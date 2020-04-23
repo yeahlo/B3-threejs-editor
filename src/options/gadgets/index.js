@@ -1,32 +1,31 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useRef, useState, useEffect} from 'react';
 import {Store, updateColor, updateGadget} from "../../store";
 
 const Gadget = props => {
 
     const {dispatch, state} = useContext(Store)
-    const [gadget, setGadget] = useState(null)
-    const sphere = useRef(null)
 
     return (
         <div className="Gadget">
-            {/*<button onClick={() => dispatch(updateColor(Math.random() * 0XFFFFFF ))}>Color</button>*/}
-
             <form>
                 <div className="radio">
                     <label>
-                        <input type="radio" value="sphere" onClick={() => { dispatch(updateGadget(setGadget === this.value))}}/>
+                        <input type="radio" checked={state.gadget === 'sphere'} value="sphere" name={"gadget"}
+                               onChange={e => dispatch(updateGadget(e.currentTarget.value))}/>
                         1 sphere
                     </label>
                 </div>
                 <div className="radio">
                     <label>
-                        <input type="radio" value="cube" onClick={() => { dispatch(updateGadget(setGadget === this.value))}}/>
+                        <input type="radio" checked={state.gadget === 'cube'}  value="cube" name={"gadget"}
+                               onChange={e => dispatch(updateGadget(e.currentTarget.value))}/>
                         1 cube
                     </label>
                 </div>
                 <div className="radio">
                     <label>
-                        <input type="radio" value="spheres" onClick={() => { dispatch(updateGadget(setGadget === this.value ))}} />
+                        <input type="radio" checked={state.gadget === 'spheres'} value="spheres" name={"gadget"}
+                               onChange={e => dispatch(updateGadget(e.currentTarget.value))}/>
                         2 spheres
                     </label>
                 </div>

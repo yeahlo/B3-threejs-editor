@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useEffect, useRef, useContext} from "react";
 import {
     BoxGeometry,
@@ -19,42 +19,31 @@ const Renderer = props => {
     const renderer = useRef(null);
     const scene = useRef(null);
     const camera = useRef(null);
-    const cube = useRef(null);
+    const [cube, setCube] = useState(null);
 
     const container = useRef(null);
 
     useEffect(() => {
-        if(state.color) {
-            cube.current.material.color = new Color().setRGB(
-                state.color.r/255,
-                state.color.g/255,
-                state.color.b/255
+        if (state.color && cube) {
+            cube.material.color = new Color().setRGB(
+                state.color.r / 255,
+                state.color.g / 255,
+                state.color.b / 255
             );
         }
-    }, [state.color]);
+    }, [state.color, cube]);
 
     useEffect(() => {
-        if(state.texture && cube.current) {
-            console.log('texture:','img/' + state.texture + '.jpg')
-
-            const texture = new TextureLoader().load( '/img/' + state.texture + '.jpg');
-            cube.current.material.map = texture;
-            cube.current.material.color = new Color().setHex(0xFFFFFF);
-            cube.current.material.needsUpdate = true;
+        if (state.texture && cube) {
+            const texture = new TextureLoader().load('/img/' + state.texture + '.jpg');
+            cube.material.map = texture;
+            cube.material.color = new Color().setHex(0xFFFFFF);
+            cube.material.needsUpdate = true;
         }
-    }, [state.texture]);
+    }, [state.texture, cube]);
 
     useEffect(() => {
         console.log('renderer', renderer);
-
-        const update = () => {
-            requestAnimationFrame( update );
-
-            cube.current.rotation.x += 0.01;
-            cube.current.rotation.z += 0.01;
-
-            renderer.current.render(scene.current, camera.current);
-        };
 
         if (!renderer.current) {
 
@@ -88,17 +77,31 @@ const Renderer = props => {
             //hemilight.color.setHSL(0.6, 1, 0.6);
             hemilight.groundColor.setHSL(0.095, 1, 0.75);
             hemilight.position.set(0, 50, 0);
-            scene.current.add( hemilight );
+            scene.current.add(hemilight);
 
             const geometry = new BoxGeometry();
-            const material = new MeshLambertMaterial( {color: 0x00ff00} );
-            cube.current = new Mesh(geometry, material);
-            scene.current.add(cube.current);
-
-            update();
+            const material = new MeshLambertMaterial({color: 0x00ff00});
+            const c = new Mesh(geometry, material);
+            setCube(c);
+            scene.current.add(c);
         }
 
     }, [renderer]);
+
+    useEffect(() => {
+        if (cube) {
+            const update = () => {
+                requestAnimationFrame(update);
+
+                if (cube) {
+                    cube.rotation.x += 0.01;
+                    cube.rotation.z += 0.01;
+                }
+                renderer.current.render(scene.current, camera.current);
+            };
+            update();
+        }
+    }, [cube])
 
     return (
         <div className="Renderer" ref={container}>
