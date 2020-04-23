@@ -1,64 +1,58 @@
 import React, {useReducer} from 'react'
 
-const UPDATE_USER = 'UPDATE_USER';
-const ADD_MESSAGE = 'ADD_MESSAGE';
-const UPDATE_FORMATED_USER = 'UPDATE_FORMATED_USER';
-const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
+const UPDATE_COLOR = 'UPDATE_COLOR';
+const UPDATE_SHAPE = 'UPDATE_SHAPE';
+const UPDATE_GADGET = 'UPDATE_GADGET';
+const UPDATE_TEXTURE = 'UPDATE_TEXTURE';
 
 const initialState = {
-    user: null,
-    formatedUser: null,
-    messages : []
+    color: null,
+    shape: null,
+    gadget: null,
+    texture : null
 };
 
-export const updateMessage = (payload) => ({
-    type: UPDATE_MESSAGE,
+export const updateTexture = (payload) => ({
+    type: UPDATE_TEXTURE,
     payload
 });
 
-export const addMessage = (payload) => ({
-    type: ADD_MESSAGE,
+export const updateShape = (payload) => ({
+    type: UPDATE_SHAPE,
     payload
 });
 
-export const updateUser = (payload) => ({
-    type: UPDATE_USER,
+export const updateGadget = (payload) => ({
+    type: UPDATE_GADGET,
     payload
 });
 
-export const updateFormatedUser = (payload) => ({
-    type: UPDATE_FORMATED_USER,
+export const updateColor = (payload) => ({
+    type: UPDATE_COLOR,
     payload
 });
 
 const reducer = (state, action) => {
-
-    console.log('action.type',action.type,state)
-
     switch (action.type) {
-        case UPDATE_MESSAGE :
-
-            const copy = [...state.messages];
-            copy[action.payload].like = !state.messages[action.payload].like;
-
+        case UPDATE_COLOR :
             return {
                 ...state,
-                messages:copy
+                color:action.payload
             };
-        case ADD_MESSAGE :
+        case UPDATE_SHAPE :
             return {
                 ...state,
-                messages: [...state.messages, action.payload]
+                color:action.payload
             };
-        case UPDATE_USER :
+        case UPDATE_TEXTURE :
             return {
                 ...state,
-                user: action.payload
+                color:action.payload
             };
-        case UPDATE_FORMATED_USER :
+        case UPDATE_GADGET :
             return {
                 ...state,
-                formatedUser: action.payload
+                color:action.payload
             };
         default:
             return state;
@@ -69,32 +63,7 @@ const Store = React.createContext();
 
 
 const middleware = store => next => action => {
-
-    switch (action.type) {
-        case ADD_MESSAGE :
-
-            const emojis = [
-                {pattern : /\(lion\)/gi, replacement : '&#129409;'},
-                {pattern : /\(coffee\)/gi, replacement : '&#9749;'}
-            ];
-
-            let m = action.payload.value;
-
-            emojis.forEach(emoji => {
-                m = m.replace(emoji.pattern ,emoji.replacement);
-            });
-
-            action.payload.formatedValue = m;
-
-            break;
-        case UPDATE_USER :
-            store.dispatch(updateFormatedUser('[' + action.payload.split('').join('|') + ']'));
-            break;
-    }
-
     next(action);
-
-    // action after state update
 };
 
 const compose = (...funcs) => x => funcs.reduceRight((composed, f) => f(composed), x);
