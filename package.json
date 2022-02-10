@@ -6,7 +6,7 @@
     "cra-template": "1.0.3",
     "fspack": "^1.0.0",
     "named-urls": "^2.0.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "react": "^16.13.1",
     "react-color": "^2.18.0",
     "react-dom": "^16.13.1",
